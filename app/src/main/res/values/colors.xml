@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#D72C4B</color>
+    <color name="colorPrimaryDark">#A13C59</color>
+    <color name="colorAccent">#239E9A</color>
+    <color name="colorAccent_alpha">#99239E9A</color>
+
+    <color name="video_orange">#EF665C</color>
+    <color name="video_orange_alpha">#99EF665C</color>
+    <color name="video_black">#514E57</color>
+</resources>

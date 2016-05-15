@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:theme="@style/ToolBarStyle"
+        app:popupTheme="@style/ToolBarStyle" />
+
+<ImageView
+    android:id="@+id/ic_back"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:src="@mipmap/ic_back"
+    android:layout_marginLeft="15dp"
+    />
+</RelativeLayout>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">VideoPlayer</string>
+    <string name="channels_activity">Channels</string>
+    <string name="videos_activity">Uploaded videos</string>
+
+    <!--activity_main-->
+    <string name="search_hint">Youtube channel name</string>
+    <string name="search_id_hint">Youtube channel id</string>
+    <string name="search_btn">Search</string>
+    <string name="search_latest">Latest search:</string>
+
+    <!--channels_item-->
+    <string name="more">Tap to view uploaded videos</string>
+    <string name="video_more">Tap to watch video</string>
+
+<!--wait dialog-->
+    <string name="please_wait">Please wait...</string>
+
+    <!--error-->
+    <string name="general_error">Something went wrong.</string>
+
+</resources>
