@@ -93,7 +93,7 @@ public class VideoPlayerActivity extends YouTubeBaseActivity{
         videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                videoView.initialize(Constants.apiKey, onInitializedListener);
+                videoView.initialize(Constants.browserKey, onInitializedListener);
             }
         });
         videoView.callOnClick();
