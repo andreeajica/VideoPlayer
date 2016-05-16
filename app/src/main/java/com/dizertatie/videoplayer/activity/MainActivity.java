@@ -19,7 +19,7 @@ import com.dizertatie.videoplayer.utils.NetworkUtils;
 import com.dizertatie.videoplayer.utils.OnCompleteListener;
 
 import java.io.UnsupportedEncodingException;
-
+//activitatea principala
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
@@ -34,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         sharedPreferences = MainActivity.this.getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
+        //referinta catre elementele din layout
         final TextInputEditText channel_name = (TextInputEditText)findViewById(R.id.channel_name);
         final TextInputEditText channel_id = (TextInputEditText)findViewById(R.id.channel_id);
         search_btn = (Button)findViewById(R.id.btn_search);
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         latest_search_wrapper = (LinearLayout)findViewById(R.id.latest_search_wrapper);
 
 
-
+//definirea actiunilor pe fiecare element
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    //functie din ciclul de viata al activitatii
+    //se apeleaza la initializare si la fiecare revenire in activitate
+    //folosim pentru a face vizibila ultima cautare
     @Override
     protected void onResume() {
         super.onResume();
@@ -85,10 +88,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void search(final String channel_name, final String type){
         try {
+            //se apeleaza functia care face requestul catre serverul google pentru canaul cerut
+            //cand se termina requestul, parametrul status primeste valoare "true" sau "false"
             NetworkUtils.getNetworkUtils(MainActivity.this).getChannelsList(channel_name, type,  new OnCompleteListener() {
                 @Override
                 public void onComplete(boolean status, Object data) {
                     if(status) {
+                        //pornim activitatea ChannelsActivity prin intent
+                        //trimitem elementele de tip Channels primite de la server
+                        //in cazul in care cautarea a fost facuta dupa numele canalului, vom salva numele in memoria cache
                         NetworkUtils.hideProgressDialog();
                         Log.d("MainActivity", "complete");
                         Channels channels = (Channels)data;
@@ -101,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     }else{
+                        //afisam mesaj de eroare
                         NetworkUtils.hideProgressDialog();
                         Toast.makeText(MainActivity.this, R.string.general_error, Toast.LENGTH_SHORT).show();
                     }

@@ -16,9 +16,7 @@ import com.dizertatie.videoplayer.objects.Videos;
 
 import java.util.ArrayList;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
+//activitatea in care se afiseaza lista de filmulete uploadate ale canalului selectat
 public class VideosActivity extends AppCompatActivity {
 
     public static String TAG = "VideosActivity";
@@ -33,6 +31,7 @@ public class VideosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_channels);
         videos = new ArrayList<>();
         Videos videosObj = new Videos();
+        //se primeste lista de clipuri prin intent
         videosObj = (Videos)getIntent().getSerializableExtra("videos");
         videos.addAll(videosObj.videos);
         Log.d(TAG,"videos obj:"+videosObj );
@@ -40,9 +39,9 @@ public class VideosActivity extends AppCompatActivity {
 
         initialiseUI();
     }
-
+    //functia care se ocupa de generarea ecranului
     private void initialiseUI() {
-
+        //alocarea functionalitatilor pe toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -50,7 +49,8 @@ public class VideosActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-
+        //initializarea listei si setarea adapterului corespunzator
+        //adapterul se ocupa de gestionarea informatiilor pentru fiecare element din lista
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.list);
         VideosAdapter adapter = new VideosAdapter(VideosActivity.this, videos);
         recyclerView.setHasFixedSize(true);

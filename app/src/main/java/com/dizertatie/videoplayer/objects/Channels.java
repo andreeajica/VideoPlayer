@@ -3,9 +3,7 @@ package com.dizertatie.videoplayer.objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
+//obiectul care retine lista de canale
 public class Channels implements Serializable {
     public ArrayList<Channel>channels = new ArrayList<>();
 

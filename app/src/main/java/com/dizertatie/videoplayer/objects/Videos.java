@@ -3,9 +3,7 @@ package com.dizertatie.videoplayer.objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
+//obiectul in care se salveaza lista de clipuri
 public class Videos implements Serializable {
 
     public ArrayList<Video> videos = new ArrayList<>();

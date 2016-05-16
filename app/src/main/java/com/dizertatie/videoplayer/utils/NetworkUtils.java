@@ -25,10 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-/**
- * Created by Tiberiu Visan on 5/8/2016.
- * Project: FastBanking
- */
+//clasa care se ocupa de requesturile catre serverele google
 public class NetworkUtils {
 
     public static final String TAG = "NetworkUtils";
@@ -37,6 +34,7 @@ public class NetworkUtils {
     private static ProgressDialog pd;
     private Context ctx;
 
+    //functia cu care apelam clasa in proiect, pentru a avea o singura instanta a clasei oriunde.
     public static NetworkUtils getNetworkUtils(Context ctx) {
         if (instance == null) {
             instance = new NetworkUtils(ctx);
@@ -44,12 +42,15 @@ public class NetworkUtils {
         return instance;
     }
 
+    //constructorul clasei
     private NetworkUtils(Context ctx) {
         this.ctx = ctx;
         requestQueue = Volley.newRequestQueue(ctx);
     }
 
-
+    //functia care face requestul de canale catre server
+    //primeste parametrii numele sau id-ul introduse de utilizator si tipul (nume sau id) pentru a apela url-ul corespunzator
+    //interfata onCompleteListener lanseaza o actiune atunci cand o alta actiune a fost terminata
     public void getChannelsList(String name,String type,  final OnCompleteListener onCompleteListener) throws UnsupportedEncodingException {
         String path;
         if(type.equals("name")){
@@ -104,7 +105,7 @@ public class NetworkUtils {
         request.setRetryPolicy(new DefaultRetryPolicy(10 * 1000, 1, 1));
         requestQueue.add(request);
     }
-
+    // la fel ca functia pentru canale
     public void getUploadedVideos(String channelId, final OnCompleteListener onCompleteListener) {
         StringRequest request = new StringRequest(Request.Method.GET, buildPlaylistsListPath(channelId, 50)
                 , new Response.Listener<String>() {
@@ -118,7 +119,6 @@ public class NetworkUtils {
                     for(int i = 0; i<items.length(); i++){
                         Video video = new Video();
                         JSONObject item = items.getJSONObject(i);
-                        //video.id = item.getString("id");
 
                         JSONObject snippet = item.getJSONObject("snippet");
                         video.title = snippet.getString("title");
@@ -128,7 +128,6 @@ public class NetworkUtils {
                         video.default_thumb = def.getString("url");
                         JSONObject resourceId = snippet.getJSONObject("resourceId");
                         video.id = resourceId.getString("videoId");
-
 
                         videos.add(video);
 
@@ -154,14 +153,13 @@ public class NetworkUtils {
         requestQueue.add(request);
     }
 
-
+    //functiile cu ajutorul carora construim link-ul pentru requestul la serverul google
     private String buildChannelsListPath( String channelName) throws UnsupportedEncodingException {
         String path = Constants.CHANNELS_LIST_URL;
         String part = "part=contentDetails%2Csnippet";
         StringBuilder query = new StringBuilder();
         query.append("forUsername=");
         query.append(URLEncoder.encode(channelName, "UTF-8"));
-        //String name = "forUsername=" + channelName;
         String key = "key="+Constants.browserKey;
         path += part + "&" + query + "&" + key;
         Log.d(TAG, "Request link " + path);
@@ -190,6 +188,7 @@ public class NetworkUtils {
         return path;
     }
 
+    //functia care afiseaza popup-ul pentru asteptare
     public static void showProgressDialog(Context context) {
 
         pd = new ProgressDialog(context);
@@ -202,7 +201,7 @@ public class NetworkUtils {
         pd.show();
 
     }
-
+    //functia care ascunde popup-ul
     public static void hideProgressDialog() {
 
         if (pd != null && pd.isShowing())

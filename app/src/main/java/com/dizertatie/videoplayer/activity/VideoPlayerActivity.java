@@ -15,9 +15,9 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
-/**
- * Created by Andreea on 5/15/2016.
- */
+//activitaea care reda videourile
+//foloseste libraria YotTubeAndroidPlayerApi pentru playerul video
+//ultimele api-uri de la google nu mai suporta redarea video pe player-ul nativ
 public class VideoPlayerActivity extends YouTubeBaseActivity{
 
 
@@ -32,11 +32,12 @@ public class VideoPlayerActivity extends YouTubeBaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-
+        //primim prin intent obiectul video care contine datele referitoare la filmuletul selectat
         if (getIntent() != null && getIntent().hasExtra("video")) {
             video = (Video)getIntent().getSerializableExtra("video");
 
         }
+        //verificam orientarea telefonului
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             setupToolbar();
             initView(video);
@@ -50,7 +51,9 @@ public class VideoPlayerActivity extends YouTubeBaseActivity{
 
 
     }
-
+    //se apeleaza in momentul in care activitatea este reincarcata
+    //o folosim pentru a salva orientarea telefonului
+    //la fiecare schimbare de orientare activitatea este incarcata din nou
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -63,7 +66,7 @@ public class VideoPlayerActivity extends YouTubeBaseActivity{
         }
     }
 
-
+    // se iau referintele pentru texte si se seteaza titlul si descrierea filmului
     public void initView(Video video){
 
 
@@ -73,13 +76,15 @@ public class VideoPlayerActivity extends YouTubeBaseActivity{
         video_title.setText(video.title);
         video_desc.setText(video.description);
     }
-
+    // initializarea playerului
     public void initVideo(final String videoId, final Bundle savedInstanceState){
         videoView = (YouTubePlayerView) findViewById(R.id.video);
-
+// se apeleaza dupa ce playerul a fost initializat
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                //reda continutul in functie de id-ul clipului obtinut de la server
+                //playerul este fullscreen sau nu in functie de orientarea telefonului(prin booleana isFullScreen)
                 youTubePlayer.loadVideo(videoId);
                 youTubePlayer.setFullscreen(isFullScreen);
             }
@@ -89,13 +94,14 @@ public class VideoPlayerActivity extends YouTubeBaseActivity{
 
             }
         };
-
+        //la apasarea pe zona destinata playerului acesta se initializeaza cu apiKey-ul din aplicatie
         videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 videoView.initialize(Constants.browserKey, onInitializedListener);
             }
         });
+        //simulam apasarea pe zona playerului pentru a porni automat clipul
         videoView.callOnClick();
 
     }

@@ -2,9 +2,8 @@ package com.dizertatie.videoplayer.objects;
 
 import java.io.Serializable;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
+//obiectul de tip channel care primeste datele despre un canal
+//serializabil este o interfata care permite informatiei din obiect sa fie trimisa prin intent intre activitati
 public class Channel implements Serializable{
 
     public String id;

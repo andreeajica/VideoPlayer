@@ -8,14 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.dizertatie.videoplayer.R;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
 public class SplashActivity extends AppCompatActivity {
 
     private int DELAY = 2000;
 
-
+    //prima activitate a aplicatiei
+    //porneste automat MainActivity dupa DELAY secunde
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

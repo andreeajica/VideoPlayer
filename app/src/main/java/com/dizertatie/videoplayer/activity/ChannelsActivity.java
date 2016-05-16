@@ -15,10 +15,7 @@ import com.dizertatie.videoplayer.objects.Channel;
 import com.dizertatie.videoplayer.objects.Channels;
 
 import java.util.ArrayList;
-
-/**
- * Created by Andreea on 5/14/2016.
- */
+//activitatea in care se afiseaza informatiile despre canalul gasit
 public class ChannelsActivity extends AppCompatActivity {
 
     public static String TAG = "ChannelsActivity";
@@ -33,6 +30,7 @@ public class ChannelsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_channels);
         Channels channelsObj = new Channels();
         channels = new ArrayList<>();
+        //se primesc datele despre canal prin intent
         channelsObj = (Channels)getIntent().getSerializableExtra("channels");
         channels.addAll(channelsObj.channels);
         Log.d(TAG,"channels obj:"+channelsObj );
@@ -40,9 +38,9 @@ public class ChannelsActivity extends AppCompatActivity {
 
         initialiseUI();
     }
-
+    //functia care se ocupa de generarea ecranului
     private void initialiseUI() {
-
+        //alocarea functionalitatilor pe toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -50,7 +48,8 @@ public class ChannelsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-
+        //initializarea listei si setarea adapterului corespunzator
+        //adapterul se ocupa de gestionarea informatiilor pentru fiecare element din lista
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.list);
         ChannelsAdapter adapter = new ChannelsAdapter(ChannelsActivity.this, channels);
         recyclerView.setHasFixedSize(true);
@@ -59,7 +58,7 @@ public class ChannelsActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
-
+//actiunea la apasarea sagetii de pe toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -68,11 +67,11 @@ public class ChannelsActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         }
-       
+
         return super.onOptionsItemSelected(item);
 
     }
-
+//functia care inchide activitatea cand se apasa back(sageata din toolbar sau butonul telefonului)
     @Override
     public void onBackPressed() {
         super.onBackPressed();

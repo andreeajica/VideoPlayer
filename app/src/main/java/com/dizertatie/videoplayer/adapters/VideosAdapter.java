@@ -18,9 +18,7 @@ import com.dizertatie.videoplayer.utils.VolleySingleton;
 
 import java.util.ArrayList;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
+//clasa care se ocupa de setarea textelor si imaginilor corespunzatoare pentru fiecare element din lista
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder> {
 
     public static String TAG = "VideosAdapter";
@@ -28,13 +26,15 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     Context context;
     ArrayList<Video>videos = new ArrayList<>();
 
-
+    //constructorul clasei
+    //este apelat in activitatea corespunzatoare si primeste de acolo contextul si lista de clipuri
     public VideosAdapter(Context context, ArrayList<Video> videos){
         this.context = context;
         this.videos.addAll(videos);
         Log.d(TAG, "videos: "+this.videos);
     }
 
+    //selectarea layoutului pentru elemente
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.videos_item, parent, false);
@@ -42,6 +42,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 
     }
 
+    //se seteaza valorile pentru fiecare element de layout folosit (imagine, titlu, descriere)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Video video= videos.get(position);
@@ -54,11 +55,13 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         if(video.default_thumb!=null && !video.default_thumb.equals("")){
             holder.image.setImageUrl(video.default_thumb, VolleySingleton.getImageLoader(context));
         }
-
+        //gestionarea click-ului pe un element din lista
         holder.item_wrapper.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                //pornim activitatea VideoPlayerActivity prin intent
+                //trimitem elementul de tip Video selectat
                 Intent intent = new Intent(context, VideoPlayerActivity.class);
                 intent.putExtra("video", video);
                 context.startActivity(intent);
@@ -73,17 +76,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         return videos.size();
     }
 
-    public void add(Video item, int position) {
-        videos.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public void remove(Video item) {
-        int position = videos.indexOf(item);
-        videos.remove(position);
-        notifyItemRemoved(position);
-    }
-
+    //se ia referinta pe fiecare item din layout
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public NetworkImageView image;
         public TextView title;

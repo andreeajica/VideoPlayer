@@ -22,9 +22,7 @@ import com.dizertatie.videoplayer.utils.VolleySingleton;
 
 import java.util.ArrayList;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
+//clasa care se ocupa de setarea textelor si imaginilor corespunzatoare pentru fiecare element din lista
 public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHolder> {
 
     public static String TAG = "ChannelsAdapter";
@@ -32,20 +30,21 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
     Context context;
     ArrayList<Channel>channels = new ArrayList<>();
 
-
+    //constructorul clasei
+    //este apelat in activitatea corespunzatoare si primeste de acolo contextul si lista de canale
     public ChannelsAdapter(Context context, ArrayList<Channel> channels){
         this.context = context;
         this.channels.addAll(channels);
         Log.d(TAG, "channels: "+this.channels);
     }
-
+    //selectarea layoutului pentru elemente
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.channels_item, parent, false);
         return new ViewHolder(v);
 
     }
-
+    //se seteaza valorile pentru fiecare element de layout folosit (imagine, titlu, descriere)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Channel channel = channels.get(position);
@@ -58,16 +57,19 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
         if(channel.default_thumb!=null && !channel.default_thumb.equals("")){
             holder.image.setImageUrl(channel.default_thumb, VolleySingleton.getImageLoader(context));
         }
-
+        //gestionarea click-ului pe un element din lista
         holder.item_wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NetworkUtils.showProgressDialog(context);
-
+                //se apeleaza functia care face requestul catre serverul google pentru videoclipurile urcate de canalul selectat
+                //cand se termina requestul, parametrul status primeste valoare "true" sau "false"
                 NetworkUtils.getNetworkUtils(context).getUploadedVideos(channel.uploads_id, new OnCompleteListener() {
                     @Override
                     public void onComplete(boolean status, Object data) {
                         if(status) {
+                            //pornim activitatea VideosActivity prin intent
+                            //trimitem elementele de tip Videos primite de la server
                             NetworkUtils.hideProgressDialog();
                             Videos videos  = (Videos)data;
                             Intent intent = new Intent(context, VideosActivity.class);
@@ -76,6 +78,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 
 
                         }else{
+                            //afisam mesaj de eroare
                             NetworkUtils.hideProgressDialog();
                             Toast.makeText(context, context.getResources().getString(R.string.general_error), Toast.LENGTH_SHORT).show();
                         }
@@ -91,17 +94,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
         return channels.size();
     }
 
-    public void add(Channel item, int position) {
-        channels.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public void remove(Channel item) {
-        int position = channels.indexOf(item);
-        channels.remove(position);
-        notifyItemRemoved(position);
-    }
-
+   //se ia referinta pe fiecare item din layout
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public NetworkImageView image;
         public TextView title;

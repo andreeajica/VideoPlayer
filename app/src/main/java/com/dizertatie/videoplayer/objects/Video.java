@@ -2,9 +2,7 @@ package com.dizertatie.videoplayer.objects;
 
 import java.io.Serializable;
 
-/**
- * Created by Andreea on 5/14/2016.
- */
+//obiectul in care se salveaza informatiile despre un video
 public class Video implements Serializable {
 
     public String id;

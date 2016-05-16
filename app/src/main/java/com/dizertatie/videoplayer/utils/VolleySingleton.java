@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+// clasa volley cu ajutorul careia afisam imaginile primite de la server printr-un url (pentru canal sau pentru clipuri)
 public class VolleySingleton {
 
     private static RequestQueue mInstance;
